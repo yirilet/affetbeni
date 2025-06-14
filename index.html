@@ -12,9 +12,10 @@
       color: white;
       font-family: 'Courier New', Courier, monospace;
     }
+
     #note {
       position: absolute;
-      top: 50%;
+      top: 45%;
       left: 50%;
       transform: translate(-50%, -50%);
       width: 80%;
@@ -29,6 +30,7 @@
       animation: fadeIn 4s ease forwards;
       z-index: 10;
     }
+
     @keyframes fadeIn {
       0% { opacity: 0; transform: translate(-50%, -40%); }
       100% { opacity: 1; transform: translate(-50%, -50%); }
@@ -41,12 +43,30 @@
       z-index: 1;
     }
 
-    audio {
-      display: none;
+    #musicButton {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 10px 20px;
+      font-size: 1.2rem;
+      background-color: red;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      z-index: 20;
+      box-shadow: 0 0 10px rgba(255,0,0,0.5);
+      transition: background-color 0.3s ease;
+    }
+
+    #musicButton:hover {
+      background-color: darkred;
     }
   </style>
 </head>
 <body>
+
   <div id="note">
     güzelliği dünyanın kendisi değil sen getirdin bu dünyaya.<br>
     ne olur beni affeder misin?<br><br>
@@ -56,15 +76,22 @@
     <strong>beni affeder misin lütfen?</strong>
   </div>
 
-  <canvas id="heartCanvas"></canvas>
+  <button id="musicButton" onclick="playMusic()">Müziği Başlat 🎵</button>
 
-  <!-- MP3 bağlantısı: wicked-game.mp3 -->
-  <audio autoplay loop>
+  <audio id="bgMusic" loop>
     <source src="wicked-game.mp3" type="audio/mpeg">
     Tarayıcınız bu müziği desteklemiyor.
   </audio>
 
+  <canvas id="heartCanvas"></canvas>
+
   <script>
+    function playMusic() {
+      const audio = document.getElementById("bgMusic");
+      audio.play();
+      document.getElementById("musicButton").style.display = "none"; // butonu gizle
+    }
+
     const canvas = document.getElementById("heartCanvas");
     const ctx = canvas.getContext("2d");
     let hearts = [];
